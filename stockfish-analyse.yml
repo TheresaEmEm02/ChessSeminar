@@ -1,0 +1,24 @@
+name: Schach-Analyse mit Stockfish
+
+on:
+  push:
+    paths:
+      - "*.pgn"  
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v2  
+
+      - name: Stockfish herunterladen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y stockfish  # Installiert Stockfish auf der virtuellen Maschine
+
+      - name: Analyse mit Stockfish
+        run: |
+          python3 -m pip install chess  # Installiert python-chess, um mit Stockfish zu arbeiten
+          python3 analyse_pgn.py  # Führt das Python-Skript aus, das die PGN-Datei analysiert
